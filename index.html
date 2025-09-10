@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagdi Carousel Filter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: sans-serif;
+            -webkit-user-select: none;  /* Prevent text selection on mobile */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #ar-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #ffffff;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.1s ease-in-out;
+            color: #333;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="ar-frame" src="" allow="camera; gyroscope; microphone"></iframe>
+
+    <div id="controls">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+    </div>
+
+    <script>
+        const filterUrls = [
+            'https://navratripagdi.netlify.app',
+            'https://pagdi1.netlify.app',
+            'https://pagdi2.netlify.app'
+        ];
+
+        let currentFilterIndex = 0;
+        const arFrame = document.getElementById('ar-frame');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function loadFilter() {
+            arFrame.src = filterUrls[currentFilterIndex];
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentFilterIndex = (currentFilterIndex - 1 + filterUrls.length) % filterUrls.length;
+            loadFilter();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentFilterIndex = (currentFilterIndex + 1) % filterUrls.length;
+            loadFilter();
+        });
+
+        // Load the first filter when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFilter();
+        });
+    </script>
+
+</body>
+</html>
